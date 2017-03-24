@@ -1,0 +1,33 @@
+group 'PIGUDF'
+version '3.0'
+
+apply plugin: 'java'
+
+sourceCompatibility = 1.6
+
+repositories {
+    mavenCentral()
+}
+
+dependencies {
+    testCompile group: 'junit', name: 'junit', version: '4.11'
+    //compile group: 'org.apache.pig', name: 'pig', version: '0.15.0'
+    //compile group: 'org.apache.hadoop', name: 'hadoop-core', version: '0.20.2'
+    compile group: 'org.json', name: 'json', version: '20160212'
+    compile files('libs/hadoop-common.jar')
+    compile files('libs/pig-0.16.0.2.5.3.0-37-core-h2.jar')
+}
+
+sourceSets {
+    main.java.srcDir "src/main"
+    //Test.java.srcDir "src/test"
+}
+
+jar {
+    from configurations.compile.collect {entry -> zipTree entry}
+    manifest {
+        attributes 'Implementation-Title': 'Gradle Jar',
+                'Implementation-Version': version
+                //'Main-Class': 'JsonParser'
+    }
+}
